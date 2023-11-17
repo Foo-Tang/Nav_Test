@@ -78,7 +78,14 @@ fun Greeting2(id: Int, name: String, modifier: Modifier = Modifier, destinations
 
     val demo2 = demo(string = "test2", int = 2, name = "Sick flip")
 
-    Button(onClick = {destinationsNavigator.navigate(Greeting1Destination(1, "Who's better", demo2))}){
-        Text(text = "Second screen! $name")
+    Column {
+        Button(onClick = {destinationsNavigator.navigate(Greeting1Destination(1, "Who's better", demo2))}){
+            Text(text = "Second screen! $name")
+        }
+        Button(onClick = { destinationsNavigator.popBackStack()}) {
+            Text("Go Back")
+        }
     }
+
+
 }
