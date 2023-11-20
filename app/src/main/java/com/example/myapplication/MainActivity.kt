@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.versionedparcelable.VersionedParcelize
 import com.example.myapplication.destinations.Greeting1Destination
 import com.example.myapplication.destinations.Greeting2Destination
+import com.example.myapplication.destinations.Greeting3Destination
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.annotation.Destination
@@ -51,9 +52,9 @@ fun HomeScreen(
     navigator: DestinationsNavigator
 ) {
     /*...*/
-    val demo1 = demo(string = "test", int = 1, name = "Tribal Chief")
+    val demo1 = demo(string = "test", int = 1, name = "Will")
 
-    navigator.navigate(Greeting1Destination(id = 1, name = "Big Dog", demo1))
+    navigator.navigate(Greeting1Destination(id = 1, name = "Adam", demo1))
 }
 
 
@@ -62,9 +63,13 @@ fun HomeScreen(
 fun Greeting1(id: Int, name: String, data: demo, destinationsNavigator: DestinationsNavigator) {
 
     Column {
-        Button(onClick = {destinationsNavigator.navigate(Greeting2Destination(5, "Pop pop"))}){
-            Text(text = "First screen! $name")
+        Button(onClick = {destinationsNavigator.navigate(Greeting2Destination(5, "John"))}){
+            Text(text = "Go To Second Screen! $name")
         }
+        Button(onClick = {destinationsNavigator.navigate(Greeting3Destination())}){
+            Text(text = "Go To Third Screen! $name")
+        }
+        Text("This is the First Screen")
         Text(data.string)
         Text(data.int.toString())
         Text(data.name)
@@ -76,16 +81,34 @@ fun Greeting1(id: Int, name: String, data: demo, destinationsNavigator: Destinat
 @Composable
 fun Greeting2(id: Int, name: String, modifier: Modifier = Modifier, destinationsNavigator: DestinationsNavigator) {
 
-    val demo2 = demo(string = "test2", int = 2, name = "Sick flip")
+    val demo2 = demo(string = "test2", int = 2, name = "Demo2")
 
     Column {
-        Button(onClick = {destinationsNavigator.navigate(Greeting1Destination(1, "Who's better", demo2))}){
-            Text(text = "Second screen! $name")
+        Button(onClick = {destinationsNavigator.navigate(Greeting3Destination())}){
+            Text(text = "Go to Third Screen! $name")
+        }
+        Button(onClick = {destinationsNavigator.navigate(Greeting1Destination(1, "Jack", demo2))}){
+            Text(text = "Go to first Screen! $name")
         }
         Button(onClick = { destinationsNavigator.popBackStack()}) {
             Text("Go Back")
         }
+        Text("This is the Second Screen")
     }
+}
 
+@Destination
+@Composable
+fun Greeting3(destinationsNavigator: DestinationsNavigator){
+    val demo2 = demo(string = "test2", int = 2, name = "Hobbs")
 
+    Column {
+        Button(onClick = {destinationsNavigator.navigate(Greeting1Destination(1, "Shaw", demo2))}){
+            Text(text = "Go to First Screen")
+        }
+        Button(onClick = { destinationsNavigator.popBackStack()}) {
+            Text("Go Back")
+        }
+        Text("This is the Third Screen")
+    }
 }
